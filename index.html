@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
 
     <title>OXISA</title>
 
@@ -24,8 +27,8 @@
 
         .app {
             max-width: 520px;
-            margin: auto;
             min-height: 100vh;
+            margin: auto;
             padding: 20px;
         }
 
@@ -37,16 +40,16 @@
         }
 
         .brand {
-            font-size: 25px;
+            font-size: 26px;
             font-weight: 800;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.7px;
         }
 
         .status {
             width: 10px;
             height: 10px;
-            background: #16a34a;
             border-radius: 50%;
+            background: #16a34a;
         }
 
         .welcome {
@@ -61,14 +64,15 @@
 
         .welcome h1 {
             font-size: 25px;
+            font-weight: 750;
         }
 
         .balance-card {
             background: #111827;
-            color: white;
+            color: #ffffff;
             border-radius: 22px;
             padding: 24px;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
         .balance-label {
@@ -78,8 +82,9 @@
         }
 
         .balance {
-            font-size: 34px;
+            font-size: 36px;
             font-weight: 800;
+            letter-spacing: -1px;
         }
 
         .coin {
@@ -95,7 +100,7 @@
         }
 
         .earn-card {
-            background: white;
+            background: #ffffff;
             border: 1px solid #e5e7eb;
             border-radius: 18px;
             padding: 18px;
@@ -120,19 +125,25 @@
             padding: 13px;
             margin-top: 14px;
             background: #111827;
-            color: white;
+            color: #ffffff;
             font-size: 14px;
             font-weight: 700;
+            cursor: pointer;
         }
 
         .button:active {
-            transform: scale(.98);
+            transform: scale(0.98);
         }
 
         .loading {
             text-align: center;
-            padding: 40px 20px;
+            padding: 50px 20px;
             color: #6b7280;
+            font-size: 14px;
+        }
+
+        .error {
+            color: #dc2626;
         }
     </style>
 </head>
@@ -147,10 +158,10 @@
     </div>
 
     <div id="loading" class="loading">
-        Loading OXISA...
+        Connecting to OXISA...
     </div>
 
-    <div id="content" style="display:none;">
+    <div id="content" style="display: none;">
 
         <div class="welcome">
             <p>Welcome back</p>
@@ -159,22 +170,42 @@
 
         <div class="balance-card">
             <div class="balance-label">Available Balance</div>
-            <div class="balance">0</div>
-            <div class="coin">OXSA</div>
+
+            <div class="balance" id="balance">
+                0
+            </div>
+
+            <div class="coin">
+                OXSA
+            </div>
         </div>
 
-        <div class="section-title">Earn OXSA</div>
+        <div class="section-title">
+            Earn OXSA
+        </div>
 
         <div class="earn-card">
             <h3>Watch Ads</h3>
-            <p>Watch available advertisements and earn OXSA.</p>
-            <button class="button">Watch Ad</button>
+
+            <p>
+                Watch available advertisements and earn OXSA.
+            </p>
+
+            <button class="button" type="button">
+                Watch Ad
+            </button>
         </div>
 
         <div class="earn-card">
             <h3>Daily Claim</h3>
-            <p>Claim your daily OXSA reward every 24 hours.</p>
-            <button class="button">Claim 5 OXSA</button>
+
+            <p>
+                Claim your daily OXSA reward every 24 hours.
+            </p>
+
+            <button class="button" type="button">
+                Claim 5 OXSA
+            </button>
         </div>
 
     </div>
@@ -186,17 +217,9 @@
 
     tg.ready();
     tg.expand();
-
-    const user = tg.initDataUnsafe?.user;
-
-    if (user) {
-        document.getElementById("userName").textContent =
-            user.first_name || "User";
-    }
-
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("content").style.display = "block";
 </script>
+
+<script src="app.js"></script>
 
 </body>
 </html>
