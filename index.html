@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>OXISA</title>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f6f8fb;
+            color: #111827;
+            min-height: 100vh;
+        }
+
+        .app {
+            max-width: 520px;
+            margin: auto;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .brand {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .status {
+            width: 10px;
+            height: 10px;
+            background: #16a34a;
+            border-radius: 50%;
+        }
+
+        .welcome {
+            margin-bottom: 20px;
+        }
+
+        .welcome p {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .welcome h1 {
+            font-size: 25px;
+        }
+
+        .balance-card {
+            background: #111827;
+            color: white;
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 18px;
+        }
+
+        .balance-label {
+            color: #aeb7c5;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .balance {
+            font-size: 34px;
+            font-weight: 800;
+        }
+
+        .coin {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 750;
+            margin: 24px 0 12px;
+        }
+
+        .earn-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 12px;
+        }
+
+        .earn-card h3 {
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+
+        .earn-card p {
+            color: #6b7280;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .button {
+            width: 100%;
+            border: 0;
+            border-radius: 13px;
+            padding: 13px;
+            margin-top: 14px;
+            background: #111827;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .button:active {
+            transform: scale(.98);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <div class="header">
+        <div class="brand">OXISA</div>
+        <div class="status"></div>
+    </div>
+
+    <div id="loading" class="loading">
+        Loading OXISA...
+    </div>
+
+    <div id="content" style="display:none;">
+
+        <div class="welcome">
+            <p>Welcome back</p>
+            <h1 id="userName">User</h1>
+        </div>
+
+        <div class="balance-card">
+            <div class="balance-label">Available Balance</div>
+            <div class="balance">0</div>
+            <div class="coin">OXSA</div>
+        </div>
+
+        <div class="section-title">Earn OXSA</div>
+
+        <div class="earn-card">
+            <h3>Watch Ads</h3>
+            <p>Watch available advertisements and earn OXSA.</p>
+            <button class="button">Watch Ad</button>
+        </div>
+
+        <div class="earn-card">
+            <h3>Daily Claim</h3>
+            <p>Claim your daily OXSA reward every 24 hours.</p>
+            <button class="button">Claim 5 OXSA</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    const tg = window.Telegram.WebApp;
+
+    tg.ready();
+    tg.expand();
+
+    const user = tg.initDataUnsafe?.user;
+
+    if (user) {
+        document.getElementById("userName").textContent =
+            user.first_name || "User";
+    }
+
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("content").style.display = "block";
+</script>
+
+</body>
+</html>
