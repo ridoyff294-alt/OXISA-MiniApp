@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -9,13 +12,21 @@
 
     <title>OXISA</title>
 
+    <!-- Telegram Mini App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
         }
 
         body {
@@ -26,11 +37,14 @@
         }
 
         .app {
+            width: 100%;
             max-width: 520px;
             min-height: 100vh;
-            margin: auto;
+            margin: 0 auto;
             padding: 20px;
         }
+
+        /* Header */
 
         .header {
             display: flex;
@@ -52,6 +66,22 @@
             background: #16a34a;
         }
 
+        /* Loading */
+
+        .loading {
+            text-align: center;
+            padding: 80px 20px;
+            color: #6b7280;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .loading.error {
+            color: #dc2626;
+        }
+
+        /* Main */
+
         .welcome {
             margin-bottom: 20px;
         }
@@ -66,6 +96,8 @@
             font-size: 25px;
             font-weight: 750;
         }
+
+        /* Balance */
 
         .balance-card {
             background: #111827;
@@ -93,11 +125,15 @@
             margin-top: 5px;
         }
 
+        /* Section */
+
         .section-title {
             font-size: 18px;
             font-weight: 750;
             margin: 24px 0 12px;
         }
+
+        /* Earn Cards */
 
         .earn-card {
             background: #ffffff;
@@ -118,6 +154,8 @@
             line-height: 1.5;
         }
 
+        /* Buttons */
+
         .button {
             width: 100%;
             border: 0;
@@ -129,97 +167,169 @@
             font-size: 14px;
             font-weight: 700;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .button:active {
             transform: scale(0.98);
         }
 
-        .loading {
-            text-align: center;
-            padding: 50px 20px;
-            color: #6b7280;
-            font-size: 14px;
-        }
-
-        .error {
-            color: #dc2626;
-        }
     </style>
+
 </head>
+
 
 <body>
 
-<div class="app">
+    <div class="app">
 
-    <div class="header">
-        <div class="brand">OXISA</div>
-        <div class="status"></div>
-    </div>
+        <!-- Header -->
 
-    <div id="loading" class="loading">
-        Connecting to OXISA...
-    </div>
+        <div class="header">
 
-    <div id="content" style="display: none;">
-
-        <div class="welcome">
-            <p>Welcome back</p>
-            <h1 id="userName">User</h1>
-        </div>
-
-        <div class="balance-card">
-            <div class="balance-label">Available Balance</div>
-
-            <div class="balance" id="balance">
-                0
+            <div class="brand">
+                OXISA
             </div>
 
-            <div class="coin">
-                OXSA
+            <div class="status"></div>
+
+        </div>
+
+
+        <!-- Loading -->
+
+        <div
+            id="loading"
+            class="loading"
+        >
+            Connecting to OXISA...
+        </div>
+
+
+        <!-- Main Content -->
+
+        <div
+            id="content"
+            style="display: none;"
+        >
+
+            <!-- Welcome -->
+
+            <div class="welcome">
+
+                <p>
+                    Welcome back
+                </p>
+
+                <h1 id="userName">
+                    User
+                </h1>
+
             </div>
-        </div>
 
-        <div class="section-title">
-            Earn OXSA
-        </div>
 
-        <div class="earn-card">
-            <h3>Watch Ads</h3>
+            <!-- Balance -->
 
-            <p>
-                Watch available advertisements and earn OXSA.
-            </p>
+            <div class="balance-card">
 
-            <button class="button" type="button">
-                Watch Ad
-            </button>
-        </div>
+                <div class="balance-label">
+                    Available Balance
+                </div>
 
-        <div class="earn-card">
-            <h3>Daily Claim</h3>
+                <div
+                    class="balance"
+                    id="balance"
+                >
+                    0
+                </div>
 
-            <p>
-                Claim your daily OXSA reward every 24 hours.
-            </p>
+                <div class="coin">
+                    OXSA
+                </div>
 
-            <button class="button" type="button">
-                Claim 5 OXSA
-            </button>
+            </div>
+
+
+            <!-- Earn -->
+
+            <div class="section-title">
+                Earn OXSA
+            </div>
+
+
+            <!-- Watch Ads -->
+
+            <div class="earn-card">
+
+                <h3>
+                    Watch Ads
+                </h3>
+
+                <p>
+                    Watch available advertisements
+                    and earn OXSA.
+                </p>
+
+                <button
+                    class="button"
+                    type="button"
+                    id="watchAdButton"
+                >
+                    Watch Ad
+                </button>
+
+            </div>
+
+
+            <!-- Daily Claim -->
+
+            <div class="earn-card">
+
+                <h3>
+                    Daily Claim
+                </h3>
+
+                <p>
+                    Claim your daily OXSA reward
+                    every 24 hours.
+                </p>
+
+                <button
+                    class="button"
+                    type="button"
+                    id="dailyClaimButton"
+                >
+                    Claim 5 OXSA
+                </button>
+
+            </div>
+
         </div>
 
     </div>
 
-</div>
 
-<script>
-    const tg = window.Telegram.WebApp;
+    <!-- Telegram Initialization -->
 
-    tg.ready();
-    tg.expand();
-</script>
+    <script>
 
-<script src="app.js"></script>
+        const tg = window.Telegram.WebApp;
+
+        tg.ready();
+
+        tg.expand();
+
+    </script>
+
+
+    <!-- OXISA Application JS -->
+
+    <script
+        src="app.js?v=20260914"
+        defer
+    ></script>
+
 
 </body>
+
 </html>
