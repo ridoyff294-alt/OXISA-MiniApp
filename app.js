@@ -6,45 +6,109 @@ tg.ready();
 tg.expand();
 
 async function initializeOXISA() {
+
+    const loading = document.getElementById("loading");
+
     try {
+
+        loading.textContent = "Connecting to OXISA...";
+
         const initData = tg.initData;
 
+        // Telegram Mini App authentication check
         if (!initData) {
-            throw new Error("Telegram authentication data not available");
+            throw new Error(
+                "Telegram initData পাওয়া যাচ্ছে না। Mini App অবশ্যই Telegram-এর ভিতর থেকে খুলতে হবে।"
+            );
         }
 
-        const response = await fetch(`${API_URL}/api/auth/telegram`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                initData: initData
-            })
-        });
+        console.log("Telegram initData received");
 
-        const data = await response.json();
+        const response = await fetch(
+            `${API_URL}/api/auth/telegram`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    initData: initData
+                })
+            }
+        );
+
+        const text = await response.text();
+
+        console.log(
+            "Backend status:",
+            response.status
+        );
+
+        console.log(
+            "Backend response:",
+            text
+        );
+
+        let data;
+
+        try {
+            data = JSON.parse(text);
+        } catch {
+            throw new Error(
+                "Backend থেকে valid JSON response পাওয়া যায়নি।"
+            );
+        }
 
         if (!response.ok) {
-            throw new Error(data.detail || "Authentication failed");
+
+            throw new Error(
+                data.detail ||
+                `Backend error: ${response.status}`
+            );
         }
 
-        console.log("OXISA user authenticated:", data);
+        if (!data.success) {
+
+            throw new Error(
+                "OXISA authentication failed."
+            );
+        }
+
+        console.log(
+            "OXISA authentication successful:",
+            data
+        );
 
         const user = data.user;
 
-        document.getElementById("userName").textContent =
+        document.getElementById(
+            "userName"
+        ).textContent =
             user.firstName || "User";
 
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("content").style.display = "block";
+        document.getElementById(
+            "loading"
+        ).style.display = "none";
+
+        document.getElementById(
+            "content"
+        ).style.display = "block";
 
     } catch (error) {
 
-        console.error("OXISA Error:", error);
+        console.error(
+            "OXISA ERROR:",
+            error
+        );
 
-        document.getElementById("loading").textContent =
-            "Unable to connect to OXISA. Please try again.";
+        loading.classList.add("error");
+
+        loading.innerHTML =
+            `<b>OXISA Connection Error</b><br><br>
+            ${error.message}<br><br>
+            <small>Telegram Mini App আবার খুলে চেষ্টা করুন।</small>`;
     }
 }
 
